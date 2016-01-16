@@ -1,11 +1,11 @@
 var http = require("http");
 var express = require("express");
 var app = express();
-var webSocketServer = require("ws").Server
+var webSocketServer = require("ws").Server;
 var firstRequest;
 var nameRoom = 0;
 var timerRequest;
-const TIME_REQUEST = 30000;
+const TIME_REQUEST = 20000;
 
 app.use(express.static("public"));
 var server = http.createServer(app);
@@ -15,18 +15,23 @@ var wss = new webSocketServer({server: server});
 wss.on("connection", function(ws) 
 {
 	//console.log("Create new websocket connection")
-	sendMessage(nameRoom, wss.clients)
+	sendMessage(nameRoom, wss.clients);
 });
 
 app.get('/get_room', function(req, res)
 {
     if (firstRequest) 
     {
-        var newNameRoom = getNameRoom();
-        firstRequest.status(200).send(newNameRoom);
-        res.status(200).send(newNameRoom);
+        var message = {
+            room: getNameRoom(),
+            first: 1
+        };
+        firstRequest.status(200).send(message);
+        
+        message.first = 0;
+        res.status(200).send(message);
 
-	sendMessage(newNameRoom, wss.clients);
+	    sendMessage(message.room, wss.clients);
         deleteFirstRequest();
     }
     else
@@ -46,7 +51,7 @@ function sendMessage(msg, clients) {
         //console.log('send msg = ' + msg);
         clients[i].send(msg);
     }
-};
+}
 
 function createRoom() 
 {
@@ -62,8 +67,7 @@ function getNameRoom(sender)
 
 function deleteFirstRequest() 
 {
+    //console.log('Удаляем запрос');
     clearTimeout(timerRequest);
     firstRequest = undefined;
-
-    //console.log('Удаляем запрос');
 }
