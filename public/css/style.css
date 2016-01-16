@@ -1,0 +1,9 @@
+#container {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#room {
+	position: absolute;
+	margin: 200px 0 0 300px;
+}

@@ -1,0 +1,9 @@
+{
+	"name": "grid_panel_crud_server_3",
+	"dependencies": {
+	    "express": "^4.4.5",
+	    "ws": "0.4.x",
+	    "http-server": "latest",
+	    "http": "latest"
+	}
+}

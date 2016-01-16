@@ -1,0 +1,8 @@
+{
+	"authorization":
+	[
+		{"login": "login_1","password": "password_1", "time": ""},
+		{"login": "login_2","password": "password_2", "time": ""},
+		{"login": "login_3","password": "password_3", "time": ""}
+	]
+}
